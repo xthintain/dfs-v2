@@ -1,6 +1,8 @@
 from diffusers import StableDiffusionControlNetPipeline, ControlNetModel
 import torch
 import os
+import platform
+import os
 import cv2
 import numpy as np
 from PIL import Image
@@ -33,14 +35,14 @@ class generateToImg:
             # 加载ControlNet模型(当需要角色形象时)
             controlnet = None
             if self.charac:
-                controlnet = ControlNetModel.from_single_file(
-                    os.path.normpath("models/stablediffusion/diffusion_pytorch_model.safetensors"),
+                controlnet = ControlNetModel.from_pretrained(
+                    os.path.normpath("models/stablediffusion/MeinaMix_V11"),
                     torch_dtype=torch.float16
                 ).to(self.device)
 
             # 加载主模型
-            pipe = StableDiffusionControlNetPipeline.from_single_file(
-                os.path.normpath("models/stablediffusion/meinamix_meinaV11.safetensors"),
+            pipe = StableDiffusionControlNetPipeline.from_pretrained(
+                os.path.normpath("models/stablediffusion/diffusion_pytorch"),
                 torch_dtype=torch.float16,
                 controlnet=controlnet,
                 safety_checker=None
